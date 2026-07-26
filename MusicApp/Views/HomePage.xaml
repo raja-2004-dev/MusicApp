@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MusicApp.Views.HomePage"
+             Shell.NavBarIsVisible="False"
+             Title="HomePage">
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- Main Content -->
+        <ScrollView Grid.Row="0">
+
+            <VerticalStackLayout
+                Padding="20,50,20,20"
+                Spacing="25">
+
+                <!-- Header -->
+                <Grid ColumnDefinitions="*,Auto">
+
+                    <VerticalStackLayout Spacing="2">
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="28"
+                            Text="Good Morning 👋"
+                            TextColor="White" />
+
+                        <Label
+                            FontSize="14"
+                            Text="Enjoy your favourite music"
+                            TextColor="#AAAAAA" />
+
+                    </VerticalStackLayout>
+
+                    <Border
+                        Grid.Column="1"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        StrokeThickness="0"
+                        BackgroundColor="#1E1E1E"
+                        StrokeShape="RoundRectangle 25">
+
+                        <Image
+                            Source="profile.png"
+                            WidthRequest="35"
+                            HeightRequest="35"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+
+                    </Border>
+
+                </Grid>
+
+                <!-- Search -->
+                <Border
+                    HeightRequest="55"
+                    BackgroundColor="#1E1E1E"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15">
+
+                    <Grid
+                        Padding="15,0"
+                        ColumnDefinitions="Auto,*"
+                        VerticalOptions="Center">
+
+                        <Image
+                            Source="search.png"
+                            WidthRequest="20"
+                            HeightRequest="20"
+                            VerticalOptions="Center" />
+
+                        <Entry
+                            Grid.Column="1"
+                            Text="{Binding SearchText}"
+                            Margin="10,0,0,0"
+                            BackgroundColor="Transparent"
+                            Placeholder="Search songs, artists..."
+                            PlaceholderColor="#777777"
+                            TextColor="White"
+                            FontSize="16"/>
+
+                    </Grid>
+
+                </Border>
+
+                <!-- Recently Played -->
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    Text="Recently Played"
+                    TextColor="White"/>
+
+                <!-- Part 2 -->
+                <CollectionView
+    ItemsSource="{Binding RecentlyPlayed}"
+    ItemsLayout="HorizontalList"
+    HeightRequest="220">
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Border
+                WidthRequest="170"
+                Margin="0,0,15,0"
+                BackgroundColor="#1E1E1E"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 20">
+
+                                <VerticalStackLayout Padding="15">
+
+                                    <Image
+                        HeightRequest="130"
+                        Aspect="AspectFill"
+                        Source="{Binding Image}" />
+
+                                    <Label
+                        Margin="0,10,0,0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="{Binding Title}"
+                        TextColor="White" />
+
+                                    <Label
+                        FontSize="14"
+                        Text="{Binding Artist}"
+                        TextColor="#A0A0A0" />
+
+                                    <Label
+                        FontSize="12"
+                        Text="{Binding Duration}"
+                        TextColor="#E56700" />
+
+                                </VerticalStackLayout>
+
+                            </Border>
+
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+                <!-- Recommended -->
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    Text="Recommended For You"
+                    TextColor="White"/>
+
+                <!-- Part 2 -->
+                <CollectionView
+    ItemsSource="{Binding RecommendedSongs}"
+    ItemsLayout="HorizontalList"
+    HeightRequest="230">
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Border
+                WidthRequest="180"
+                Margin="0,0,15,0"
+                BackgroundColor="#1E1E1E"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 20">
+
+                                <VerticalStackLayout Padding="15">
+
+                                    <Image
+                        HeightRequest="140"
+                        Aspect="AspectFill"
+                        Source="{Binding Image}" />
+
+                                    <Label
+                        Margin="0,10,0,0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="{Binding Title}"
+                        TextColor="White" />
+
+                                    <Label
+                        FontSize="14"
+                        Text="{Binding Artist}"
+                        TextColor="#AAAAAA" />
+
+                                    <Button
+                        Margin="0,10,0,0"
+                        BackgroundColor="#E56700"
+                        CornerRadius="18"
+                        HeightRequest="38"
+                        Text="Play"
+                        TextColor="White" />
+
+                                </VerticalStackLayout>
+
+                            </Border>
+
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+                <!-- Trending -->
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    Text="Trending Songs"
+                    TextColor="White"/>
+
+                <!-- Part 3 -->
+                <CollectionView
+    HeightRequest="380"
+    ItemsSource="{Binding TrendingSongs}"
+    SelectionMode="None">
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Border
+                Margin="0,0,0,12"
+                Padding="12"
+                BackgroundColor="#1E1E1E"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 18">
+
+                                <Grid
+                    ColumnDefinitions="70,*,Auto"
+                    ColumnSpacing="15">
+
+                                    <!-- Album -->
+
+                                    <Image
+                        Grid.Column="0"
+                        HeightRequest="70"
+                        WidthRequest="70"
+                        Aspect="AspectFill"
+                        Source="{Binding Image}" />
+
+                                    <!-- Song -->
+
+                                    <VerticalStackLayout
+                        Grid.Column="1"
+                        VerticalOptions="Center">
+
+                                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            Text="{Binding Title}"
+                            TextColor="White" />
+
+                                        <Label
+                            FontSize="14"
+                            Text="{Binding Artist}"
+                            TextColor="#AAAAAA" />
+
+                                        <Label
+                            FontSize="12"
+                            Text="{Binding Duration}"
+                            TextColor="#E56700" />
+
+                                    </VerticalStackLayout>
+
+                                    <!-- Play Button -->
+
+                                    <Border
+                        Grid.Column="2"
+                        WidthRequest="45"
+                        HeightRequest="45"
+                        BackgroundColor="#E56700"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 22"
+                        VerticalOptions="Center">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},Path=BindingContext.PlaySongCommand}"
+                                                                  CommandParameter="{Binding}"/>
+                                        </Border.GestureRecognizers>
+
+                                        <Image
+                            WidthRequest="18"
+                            HeightRequest="18"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            Source="play.png" />
+
+                                    </Border>
+
+                                </Grid>
+
+                            </Border>
+
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+        <!-- Bottom Navigation -->
+        <Border
+            Grid.Row="1"
+            HeightRequest="75"
+            BackgroundColor="#1A1A1A"
+            StrokeThickness="0">
+
+            <Grid
+                Padding="20,0"
+                ColumnDefinitions="*,*,*,*">
+
+                <VerticalStackLayout
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                    <Image
+                        Source="home.png"
+                        WidthRequest="24"
+                        HeightRequest="24"/>
+
+                    <Label
+                        FontSize="12"
+                        Text="Home"
+                        TextColor="#E56700"/>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+    Grid.Column="1"
+    HorizontalOptions="Center"
+    VerticalOptions="Center">
+
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+            Command="{Binding OpenSearchCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+
+                    <Image
+        Source="search.png"
+        WidthRequest="24"
+        HeightRequest="24"/>
+
+                    <Label
+        Text="Search"
+        TextColor="White"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Column="2"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+Command="{Binding OpenLibraryCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+
+                    <Image
+                        Source="library.png"
+                        WidthRequest="24"
+                        HeightRequest="24"/>
+
+                    <Label
+                        FontSize="12"
+                        Text="Library"
+                        TextColor="White"/>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Column="3"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+Command="{Binding OpenProfileCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+
+                    <Image
+                        Source="user.png"
+                        WidthRequest="24"
+                        HeightRequest="24"/>
+
+                    <Label
+                        FontSize="12"
+                        Text="Profile"
+                        TextColor="White"/>
+
+                </VerticalStackLayout>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</ContentPage>

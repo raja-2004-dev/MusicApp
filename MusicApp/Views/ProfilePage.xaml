@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MusicApp.Views.ProfilePage"
+             Title="ProfilePage">
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="20,50,20,20"
+            Spacing="25">
+
+            <!-- Header -->
+
+            <Grid ColumnDefinitions="Auto,*">
+
+                <Border
+                    WidthRequest="45"
+                    HeightRequest="45"
+                    BackgroundColor="#1E1E1E"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 22">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding BackCommand}" />
+                    </Border.GestureRecognizers>
+
+                    <Image
+                        Source="back.png"
+                        WidthRequest="22"
+                        HeightRequest="22"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
+
+                </Border>
+
+                <Label
+                    Grid.Column="1"
+                    Margin="15,0"
+                    VerticalOptions="Center"
+                    Text="Profile"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="White"/>
+
+            </Grid>
+
+            <!-- Profile -->
+
+            <VerticalStackLayout
+                HorizontalOptions="Center"
+                Spacing="12">
+
+                <Border
+                    WidthRequest="120"
+                    HeightRequest="120"
+                    BackgroundColor="#1E1E1E"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 60">
+
+                    <Image
+                        Source="profile.png"
+                        WidthRequest="80"
+                        HeightRequest="80"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
+
+                </Border>
+
+                <Label
+                    Text="{Binding UserName}"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    TextColor="White"/>
+
+                <Label
+                    Text="{Binding Email}"
+                    FontSize="15"
+                    TextColor="#AAAAAA"/>
+
+            </VerticalStackLayout>
+
+            <!-- Menu -->
+
+            <CollectionView
+                ItemsSource="{Binding MenuItems}"
+                SelectionMode="None">
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <Border
+                            Margin="0,0,0,12"
+                            Padding="15"
+                            BackgroundColor="#1E1E1E"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 18">
+
+                            <Grid ColumnDefinitions="40,*,Auto">
+
+                                <Label
+                                    Text="{Binding Icon}"
+                                    FontSize="22"
+                                    VerticalOptions="Center"/>
+
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="10,0"
+                                    Text="{Binding Title}"
+                                    FontSize="17"
+                                    TextColor="White"
+                                    VerticalOptions="Center"/>
+
+                                <Label
+                                    Grid.Column="2"
+                                    Text=">"
+                                    FontSize="20"
+                                    TextColor="#888888"
+                                    VerticalOptions="Center"/>
+
+                            </Grid>
+
+                        </Border>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+            <Button
+                Text="Logout"
+                HeightRequest="55"
+                BackgroundColor="#E56700"
+                CornerRadius="18"
+                FontAttributes="Bold"
+                TextColor="White"/>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+</ContentPage>

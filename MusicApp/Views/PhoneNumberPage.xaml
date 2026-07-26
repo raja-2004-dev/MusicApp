@@ -1,0 +1,107 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MusicApp.Views.PhoneNumberPage"
+    BackgroundColor="{StaticResource BackgroundColor}"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid
+        Padding="30"
+        RowDefinitions="Auto,*,Auto">
+
+        <!-- Logo -->
+        <VerticalStackLayout
+            Grid.Row="0"
+            Spacing="20"
+            HorizontalOptions="Center"
+            Margin="0,40,0,20">
+
+            <Image
+                Source="splash.png"
+                HeightRequest="100"
+                WidthRequest="100"/>
+
+            <Label
+                Text="Music 2.0"
+                FontSize="28"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                TextColor="{StaticResource PrimaryTextColor}"/>
+
+        </VerticalStackLayout>
+
+        <!-- Content -->
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            Spacing="20"
+            VerticalOptions="Center">
+
+            <Label
+                Text="Welcome Back!"
+                FontSize="30"
+                FontAttributes="Bold"
+                TextColor="{StaticResource PrimaryTextColor}"/>
+
+            <Label
+                Text="Enter your phone number to continue listening."
+                FontSize="16"
+                TextColor="{StaticResource SecondaryTextColor}"/>
+
+            <Border
+                Stroke="{StaticResource BorderColor}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 15">
+
+                <Grid
+                    Padding="15"
+                    ColumnDefinitions="70,*">
+
+                    <Label
+                        Text="+91"
+                        VerticalOptions="Center"
+                        FontSize="18"
+                        TextColor="{StaticResource PrimaryTextColor}"/>
+
+                    <Entry
+                        Grid.Column="1"
+                        Placeholder="Phone Number"
+                        Text="{Binding PhoneNumber}"
+                        Keyboard="Telephone"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource PrimaryTextColor}"
+                        PlaceholderColor="{StaticResource HintTextColor}"/>
+
+                </Grid>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+        <!-- Bottom -->
+
+        <VerticalStackLayout
+            Grid.Row="2"
+            Spacing="15">
+
+            <Button
+                Text="Continue"
+                HeightRequest="55"
+                CornerRadius="28"
+                Command="{Binding ContinueCommand}"
+                FontSize="18"
+                FontAttributes="Bold"
+                BackgroundColor="{StaticResource PrimaryColor}"
+                TextColor="White"/>
+
+            <Label
+                HorizontalTextAlignment="Center"
+                FontSize="12"
+                TextColor="{StaticResource HintTextColor}"
+                Text="By continuing you agree to our Terms and Privacy Policy"/>
+
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>

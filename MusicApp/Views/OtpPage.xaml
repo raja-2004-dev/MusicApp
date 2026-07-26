@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MusicApp.Views.OtpPage"
+             Title="OtpPage">
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,60"
+            Spacing="30">
+            <!-- Title -->
+            <VerticalStackLayout Spacing="8">
+
+                <Label
+                    Text="Verification Code"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"/>
+
+                <Label
+                    Text="We've sent a 6-digit verification code to your phone number."
+                    FontSize="15"
+                    HorizontalTextAlignment="Center"
+                    Opacity="0.7"/>
+
+            </VerticalStackLayout>
+
+            <!-- OTP Boxes -->
+            <HorizontalStackLayout>
+                <HorizontalStackLayout
+                HorizontalOptions="Center"
+                Spacing="12">
+
+                    <Border
+                    WidthRequest="50"
+                    HeightRequest="55"
+                    StrokeShape="RoundRectangle 10">
+
+                        <Entry
+                        MaxLength="1"
+                        Keyboard="Numeric"
+                        FontSize="22"
+                            Text="{Binding Otp1}"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"/>
+                    </Border>
+
+                    <!-- Repeat the same Border 5 more times -->
+
+                </HorizontalStackLayout>
+                <HorizontalStackLayout
+    HorizontalOptions="Center"
+    Spacing="12">
+
+                    <Border
+        WidthRequest="50"
+        HeightRequest="55"
+        StrokeShape="RoundRectangle 10">
+
+                        <Entry
+            MaxLength="1"
+            Keyboard="Numeric"
+                            Text="{Binding Otp2}"
+            FontSize="22"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center"/>
+                    </Border>
+
+                    <!-- Repeat the same Border 5 more times -->
+
+                </HorizontalStackLayout>
+                <HorizontalStackLayout
+    HorizontalOptions="Center"
+    Spacing="12">
+
+                    <Border
+        WidthRequest="50"
+        HeightRequest="55"
+        StrokeShape="RoundRectangle 10">
+
+                        <Entry
+            MaxLength="1"
+                            Text="{Binding Otp3}"
+            Keyboard="Numeric"
+            FontSize="22"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center"/>
+                    </Border>
+
+                    <!-- Repeat the same Border 5 more times -->
+
+                </HorizontalStackLayout>
+                <HorizontalStackLayout
+    HorizontalOptions="Center"
+    Spacing="12">
+
+                    <Border
+        WidthRequest="50"
+        HeightRequest="55"
+        StrokeShape="RoundRectangle 10">
+
+                        <Entry
+            MaxLength="1"
+            Keyboard="Numeric"
+                            Text="{Binding Otp4}"
+            FontSize="22"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center"/>
+                    </Border>
+
+                    <!-- Repeat the same Border 5 more times -->
+
+                </HorizontalStackLayout>
+                <HorizontalStackLayout
+    HorizontalOptions="Center"
+    Spacing="12">
+
+                    <Border
+        WidthRequest="50"
+        HeightRequest="55"
+        StrokeShape="RoundRectangle 10">
+
+                        <Entry
+            MaxLength="1"
+                            Text="{Binding Otp5}"
+            Keyboard="Numeric"
+            FontSize="22"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center"/>
+                    </Border>
+
+                    <!-- Repeat the same Border 5 more times -->
+
+                </HorizontalStackLayout>
+                <HorizontalStackLayout
+    HorizontalOptions="Center"
+    Spacing="12">
+
+                    <Border
+        WidthRequest="50"
+        HeightRequest="55"
+        StrokeShape="RoundRectangle 10">
+
+                        <Entry
+            MaxLength="1"
+            Keyboard="Numeric"
+                            Text="{Binding Otp6}"
+            FontSize="22"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center"/>
+                    </Border>
+
+                    <!-- Repeat the same Border 5 more times -->
+
+                </HorizontalStackLayout>
+            </HorizontalStackLayout>
+
+            <!-- Verify Button -->
+            <Button
+                Text="Verify"
+                Command="{Binding VerifyCommand}"
+                HeightRequest="55"
+               
+                CornerRadius="12"/>
+
+            <!-- Resend -->
+            <HorizontalStackLayout
+                HorizontalOptions="Center"
+                Spacing="5">
+
+                <Label Text="Didn't receive the code?" />
+
+                <Label
+                    Text="Resend"
+                    FontAttributes="Bold"/>
+
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+</ContentPage>

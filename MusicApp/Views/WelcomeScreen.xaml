@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MusicApp.Views.WelcomeScreen"
+             Title="WelcomeScreen"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             NavigationPage.HasNavigationBar="False">
+    <Grid Padding="30" >
+        <VerticalStackLayout VerticalOptions="Center"
+HorizontalOptions="Center"
+Spacing="40">
+            <Image Source="splash.png"
+                   HeightRequest="180"
+                   Aspect="AspectFit"
+WidthRequest="180">
+
+            </Image>
+            <Label
+     Text="Music 2.0"
+     FontSize="34"
+     FontAttributes="Bold"
+     TextColor="{StaticResource PrimaryTextColor}"
+     HorizontalOptions="Center" />
+
+            <Label
+     Text="Feel Every Beat"
+     FontSize="16"
+     TextColor="{StaticResource SecondaryTextColor}"
+     HorizontalOptions="Center" />
+            <Label Text="Discover millions of songs,
+create playlists and enjoy music
+anytime, anywhere."
+                   FontSize="16"
+                   TextColor="{StaticResource SecondaryTextColor}"
+                   HorizontalOptions="Center"></Label>
+            <Button
+    Text="Get Started"
+    WidthRequest="220"
+    HeightRequest="55"
+    CornerRadius="28"
+                Command="{Binding GetStartedCommand}"
+    FontSize="18"
+    FontAttributes="Bold"
+    BackgroundColor="{StaticResource PrimaryColor}"
+    TextColor="White"/>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Already have an account "></Span>
+                        <Span Text="? "/>
+                        <Span Text="Sign In"
+                             TextColor="{StaticResource PrimaryColor}"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </VerticalStackLayout>
+    </Grid>
+
+
+
+</ContentPage>

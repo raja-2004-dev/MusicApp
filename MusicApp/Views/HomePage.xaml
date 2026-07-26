@@ -380,7 +380,7 @@ Command="{Binding OpenProfileCommand}" />
                     <Image
                         Source="user.png"
                         WidthRequest="24"
-                        BackgroundColor="BlueViolet"
+                       
                         
                         HeightRequest="24"/>
 

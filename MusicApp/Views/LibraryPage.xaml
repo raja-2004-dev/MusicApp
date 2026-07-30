@@ -1,68 +1,64 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MusicApp.Views.LibraryPage"
-             Title="LibraryPage">
+<ContentPage
+    x:Class="MusicApp.Views.LibraryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="LibraryPage">
     <ScrollView>
 
-        <VerticalStackLayout
-            Padding="20,50,20,20"
-            Spacing="20">
+        <VerticalStackLayout Padding="20,50,20,20" Spacing="20">
 
-            <!-- Header -->
+            <!--  Header  -->
 
             <Grid ColumnDefinitions="Auto,*">
 
                 <Border
-                    WidthRequest="45"
-                    HeightRequest="45"
                     BackgroundColor="#1E1E1E"
+                    HeightRequest="45"
+                    StrokeShape="RoundRectangle 22"
                     StrokeThickness="0"
-                    StrokeShape="RoundRectangle 22">
+                    WidthRequest="45">
 
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding BackCommand}" />
+                        <TapGestureRecognizer Command="{Binding BackCommand}" />
                     </Border.GestureRecognizers>
 
                     <Image
-                        Source="back.png"
-                        WidthRequest="22"
                         HeightRequest="22"
                         HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
+                        Source="back.png"
+                        VerticalOptions="Center"
+                        WidthRequest="22" />
 
                 </Border>
 
                 <Label
                     Grid.Column="1"
                     Margin="15,0"
-                    VerticalOptions="Center"
-                    FontSize="28"
                     FontAttributes="Bold"
+                    FontSize="28"
                     Text="Library"
-                    TextColor="White"/>
+                    TextColor="White"
+                    VerticalOptions="Center" />
 
             </Grid>
 
             <Label
                 FontSize="18"
                 Text="Your Music"
-                TextColor="#AAAAAA"/>
+                TextColor="#AAAAAA" />
 
-            <!-- Favorites -->
+            <!--  Favorites  -->
 
             <Border
-                BackgroundColor="#1E1E1E"
                 Padding="18"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 18">
+                BackgroundColor="#1E1E1E"
+                StrokeShape="RoundRectangle 18"
+                StrokeThickness="0">
 
                 <Grid ColumnDefinitions="Auto,*,Auto">
 
-                    <Label
-                        FontSize="18"
-                        Text="❤️"/>
+                    <Label FontSize="18" Text="❤️" />
 
                     <Label
                         Grid.Column="1"
@@ -70,30 +66,28 @@
                         FontAttributes="Bold"
                         FontSize="18"
                         Text="Favorites"
-                        TextColor="White"/>
+                        TextColor="White" />
 
                     <Label
                         Grid.Column="2"
                         Text="120"
-                        TextColor="#E56700"/>
+                        TextColor="#E56700" />
 
                 </Grid>
 
             </Border>
 
-            <!-- Playlist -->
+            <!--  Playlist  -->
 
             <Border
-                BackgroundColor="#1E1E1E"
                 Padding="18"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 18">
+                BackgroundColor="#1E1E1E"
+                StrokeShape="RoundRectangle 18"
+                StrokeThickness="0">
 
                 <Grid ColumnDefinitions="Auto,*,Auto">
 
-                    <Label
-                        FontSize="18"
-                        Text="🎼"/>
+                    <Label FontSize="18" Text="🎼" />
 
                     <Label
                         Grid.Column="1"
@@ -101,30 +95,28 @@
                         FontAttributes="Bold"
                         FontSize="18"
                         Text="Playlists"
-                        TextColor="White"/>
+                        TextColor="White" />
 
                     <Label
                         Grid.Column="2"
                         Text="12"
-                        TextColor="#E56700"/>
+                        TextColor="#E56700" />
 
                 </Grid>
 
             </Border>
 
-            <!-- Downloads -->
+            <!--  Downloads  -->
 
             <Border
-                BackgroundColor="#1E1E1E"
                 Padding="18"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 18">
+                BackgroundColor="#1E1E1E"
+                StrokeShape="RoundRectangle 18"
+                StrokeThickness="0">
 
                 <Grid ColumnDefinitions="Auto,*,Auto">
 
-                    <Label
-                        FontSize="18"
-                        Text="⬇"/>
+                    <Label FontSize="18" Text="⬇" />
 
                     <Label
                         Grid.Column="1"
@@ -132,28 +124,55 @@
                         FontAttributes="Bold"
                         FontSize="18"
                         Text="Downloads"
-                        TextColor="White"/>
+                        TextColor="White" />
 
                     <Label
                         Grid.Column="2"
                         Text="18"
-                        TextColor="#E56700"/>
+                        TextColor="#E56700" />
 
                 </Grid>
 
             </Border>
 
-            <!-- Recently Played -->
+            <!--  Recently Played  -->
 
             <Label
-                FontSize="22"
                 FontAttributes="Bold"
+                FontSize="22"
                 Text="Recently Played"
-                TextColor="White"/>
+                TextColor="White" />
 
-            <CollectionView
-                ItemsSource="{Binding Songs}"
-                SelectionMode="None">
+            <CollectionView ItemsSource="{Binding FavoriteSongs}" SelectionMode="None">
+
+                <CollectionView.EmptyView>
+
+                    <VerticalStackLayout
+                        Padding="30"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                        <Label
+                            FontSize="60"
+                            HorizontalOptions="Center"
+                            Text="❤️" />
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Text="No favorite songs yet"
+                            TextColor="White" />
+
+                        <Label
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="Tap the heart icon on a song to add it here."
+                            TextColor="#AAAAAA" />
+
+                    </VerticalStackLayout>
+
+                </CollectionView.EmptyView>
 
                 <CollectionView.ItemTemplate>
 
@@ -163,16 +182,15 @@
                             Margin="0,0,0,12"
                             Padding="12"
                             BackgroundColor="#1E1E1E"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 18">
+                            StrokeShape="RoundRectangle 18"
+                            StrokeThickness="0">
 
-                            <Grid
-                                ColumnDefinitions="60,*,Auto">
+                            <Grid ColumnDefinitions="60,*,Auto">
 
                                 <Image
+                                    HeightRequest="60"
                                     Source="{Binding Image}"
-                                    WidthRequest="60"
-                                    HeightRequest="60"/>
+                                    WidthRequest="60" />
 
                                 <VerticalStackLayout
                                     Grid.Column="1"
@@ -183,21 +201,21 @@
                                         FontAttributes="Bold"
                                         FontSize="18"
                                         Text="{Binding Title}"
-                                        TextColor="White"/>
+                                        TextColor="White" />
 
                                     <Label
                                         FontSize="14"
                                         Text="{Binding Artist}"
-                                        TextColor="#AAAAAA"/>
+                                        TextColor="#AAAAAA" />
 
                                 </VerticalStackLayout>
 
                                 <Image
                                     Grid.Column="2"
-                                    Source="play.png"
-                                    WidthRequest="24"
                                     HeightRequest="24"
-                                    VerticalOptions="Center"/>
+                                    Source="play.png"
+                                    VerticalOptions="Center"
+                                    WidthRequest="24" />
 
                             </Grid>
 

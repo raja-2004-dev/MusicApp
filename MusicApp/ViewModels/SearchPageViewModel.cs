@@ -12,48 +12,45 @@ namespace MusicApp.ViewModels
     {
         [ObservableProperty]
         private string searchText = string.Empty;
+        protected readonly SongServices _songServices;
 
+        public RelayCommand SearchCommand { get; set; }
         public ObservableCollection<string> RecentSearches { get; } = new();
 
-        public ObservableCollection<Song> Songs { get; } = new();
+        public ObservableCollection<Song> FilteredSongs { get; set;}
 
-        public SearchPageViewModel()
+        public List<Song> Songs { get; } = new();
+
+        public SearchPageViewModel(SongServices songServices)
         {
+            _songServices = songServices;
+            SearchCommand=new RelayCommand(SearchCommandHandler);
+
+            foreach (var song in _songServices.GetSongs())
+            {
+                Songs.Add(song);
+            }
             RecentSearches.Add("Believer");
             RecentSearches.Add("Perfect");
             RecentSearches.Add("Faded");
 
-            Songs.Add(new Song
-            {
-                Title = "Believer",
-                Artist = "Imagine Dragons",
-                Image = "album1.png",
-                Duration = "3:28"
-            });
+        }
 
-            Songs.Add(new Song
-            {
-                Title = "Perfect",
-                Artist = "Ed Sheeran",
-                Image = "album2.png",
-                Duration = "4:10"
-            });
+       
 
-            Songs.Add(new Song
+        void SearchCommandHandler()
+        {
+            if(Songs==null || Songs.Count <= 0)
             {
-                Title = "Heat Waves",
-                Artist = "Glass Animals",
-                Image = "album3.png",
-                Duration = "3:35"
-            });
-
-            Songs.Add(new Song
+                return;
+            }
+            if (string.IsNullOrEmpty(SearchText))
             {
-                Title = "Thunder",
-                Artist = "Imagine Dragons",
-                Image = "album4.png",
-                Duration = "3:10"
-            });
+                FilteredSongs = new ObservableCollection<Song>(Songs);
+                return;
+            }
+            var filteredSongs = Songs.Where(s => s.Title.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || s.Artist.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+            FilteredSongs = new ObservableCollection<Song>(filteredSongs);
         }
 
         [RelayCommand]

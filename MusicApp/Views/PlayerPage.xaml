@@ -1,267 +1,356 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MusicApp.Views.PlayerPage"
-             Title="PlayerPage"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="#121212">
-    <Grid
-        Padding="20,50,20,20"
-        RowDefinitions="Auto,*,Auto">
 
-        <!-- Header -->
-        <Grid
-            Grid.Row="0"
-            ColumnDefinitions="Auto,*,Auto">
+<ContentPage
+    x:Class="MusicApp.Views.PlayerPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    BackgroundColor="#121212"
+    Shell.NavBarIsVisible="False">
 
-            <!-- Back -->
+    <Grid Padding="20,50,20,20" RowDefinitions="Auto,*,Auto">
+
+        <!--  Header  -->
+
+        <Grid Grid.Row="0" ColumnDefinitions="50,*,50">
+
+            <!--  Back  -->
 
             <Border
-                WidthRequest="45"
-                HeightRequest="45"
                 BackgroundColor="#1E1E1E"
+                HeightRequest="45"
+                StrokeShape="RoundRectangle 22"
                 StrokeThickness="0"
-                StrokeShape="RoundRectangle 22">
+                WidthRequest="45">
 
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoBackCommand}" />
                 </Border.GestureRecognizers>
 
                 <Image
-                    Source="back.png"
-                    WidthRequest="22"
                     HeightRequest="22"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center"/>
+                    Source="back.png"
+                    VerticalOptions="Center"
+                    WidthRequest="22">
+
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="White" />
+                    </Image.Behaviors>
+
+                </Image>
+
             </Border>
 
-            <Label
+            <!--  Title  -->
+
+            <VerticalStackLayout
                 Grid.Column="1"
                 HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Text="Now Playing"
-                FontSize="22"
-                FontAttributes="Bold"
-                TextColor="White"/>
+                Spacing="0"
+                VerticalOptions="Center">
 
-            <!-- Menu -->
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    Text="Now Playing"
+                    TextColor="White" />
+
+                <Label
+                    FontSize="12"
+                    Text="Music 2.0"
+                    TextColor="#AAAAAA" />
+
+            </VerticalStackLayout>
+
+            <!--  More  -->
 
             <Border
                 Grid.Column="2"
-                WidthRequest="45"
-                HeightRequest="45"
                 BackgroundColor="#1E1E1E"
+                HeightRequest="45"
+                StrokeShape="RoundRectangle 22"
                 StrokeThickness="0"
-                StrokeShape="RoundRectangle 22">
+                WidthRequest="45">
 
                 <Image
-                    Source="more.png"
-                    WidthRequest="22"
                     HeightRequest="22"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center"/>
+                    Source="more.png"
+                    VerticalOptions="Center"
+                    WidthRequest="22">
+
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="White" />
+                    </Image.Behaviors>
+
+                </Image>
+
             </Border>
 
         </Grid>
 
-        <!-- Content -->
+        <!--  Main Content  -->
 
         <VerticalStackLayout
             Grid.Row="1"
-            VerticalOptions="Center"
-            Spacing="25">
+            Spacing="25"
+            VerticalOptions="Center">
 
-            <!-- Album -->
+            <!--  Album  -->
 
             <Border
-                WidthRequest="300"
-                HeightRequest="300"
+                HeightRequest="260"
                 HorizontalOptions="Center"
+                StrokeShape="RoundRectangle 25"
                 StrokeThickness="0"
-                StrokeShape="RoundRectangle 25">
+                WidthRequest="260">
 
-                <Image
-                    Source="{Binding Image}"
-                    Aspect="AspectFill"/>
+                <Image Aspect="AspectFill" Source="{Binding Image}" />
+
             </Border>
 
-            <!-- Song -->
+            <!--  Song  -->
 
-            <VerticalStackLayout
-                HorizontalOptions="Center"
-                Spacing="4">
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
 
                 <Label
-                    Text="{Binding Title}"
-                    FontSize="30"
                     FontAttributes="Bold"
-                    TextColor="White"/>
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}"
+                    TextColor="White" />
 
                 <Label
-                    Text="{Binding Artist}"
                     FontSize="18"
-                    TextColor="#A5A5A5"/>
+                    HorizontalOptions="Center"
+                    Text="{Binding Artist}"
+                    TextColor="#A5A5A5" />
 
             </VerticalStackLayout>
 
-            <!-- Progress -->
+            <!--  Progress  -->
 
             <Slider
-                Value="{Binding Progress}"
-                Minimum="0"
                 Maximum="100"
-                ThumbColor="#E56700"
+                MaximumTrackColor="#444444"
+                Minimum="0"
                 MinimumTrackColor="#E56700"
-                MaximumTrackColor="#444444"/>
+                ThumbColor="#E56700"
+                Value="{Binding Progress}" />
 
-            <!-- Time -->
+            <!--  Time  -->
 
             <Grid ColumnDefinitions="Auto,*,Auto">
 
-                <Label
-                    Text="{Binding CurrentTime}"
-                    TextColor="#A5A5A5"/>
+                <Label Text="{Binding CurrentTime}" TextColor="#A5A5A5" />
 
                 <Label
                     Grid.Column="2"
                     Text="{Binding TotalTime}"
-                    TextColor="#A5A5A5"/>
+                    TextColor="#A5A5A5" />
 
             </Grid>
 
-            <!-- Controls -->
+            <!--  Controls  -->
 
-            <Grid
-                Margin="0,20"
-                ColumnDefinitions="*,*,*,*,*">
+            <Grid Margin="0,15" ColumnDefinitions="*,*,*,*,*">
+
+                <!--  Shuffle  -->
 
                 <Image
-                    Source="shuffle.png"
-                    WidthRequest="24"
                     HeightRequest="24"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center"/>
+                    Source="shuffle.png"
+                    VerticalOptions="Center"
+                    WidthRequest="24">
+
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="White" />
+                    </Image.Behaviors>
+
+                </Image>
+
+                <!--  Previous  -->
 
                 <Border
-    Grid.Column="1"
-    WidthRequest="55"
-    HeightRequest="55"
-    BackgroundColor="#1E1E1E"
-    StrokeThickness="0"
-    StrokeShape="RoundRectangle 28">
+                    Grid.Column="1"
+                    BackgroundColor="#1E1E1E"
+                    HeightRequest="55"
+                    StrokeShape="RoundRectangle 28"
+                    StrokeThickness="0"
+                    WidthRequest="55">
 
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer
-            Command="{Binding PreviousSongCommand}" />
+                        <TapGestureRecognizer Command="{Binding PreviousSongCommand}" />
                     </Border.GestureRecognizers>
 
                     <Image
-        Source="previous.png"
-        WidthRequest="26"
-        HeightRequest="26"
-        HorizontalOptions="Center"
-        VerticalOptions="Center"/>
+                        HeightRequest="24"
+                        HorizontalOptions="Center"
+                        Source="previous.png"
+                        VerticalOptions="Center"
+                        WidthRequest="24">
+
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="White" />
+                        </Image.Behaviors>
+
+                    </Image>
+
                 </Border>
 
-                <!-- Play -->
+                <!--  Play  -->
 
                 <Border
                     Grid.Column="2"
-                    WidthRequest="75"
+                    BackgroundColor="#E56700"
                     HeightRequest="75"
                     HorizontalOptions="Center"
-                    BackgroundColor="#E56700"
+                    StrokeShape="RoundRectangle 38"
                     StrokeThickness="0"
-                    StrokeShape="RoundRectangle 38">
+                    WidthRequest="75">
 
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding PlayPauseCommand}" />
+                        <TapGestureRecognizer Command="{Binding PlayPauseCommand}" />
                     </Border.GestureRecognizers>
 
                     <Image
-    Source="{Binding PlayPauseIcon}"
-    WidthRequest="34"
-    HeightRequest="34"
-    HorizontalOptions="Center"
-    VerticalOptions="Center"/>
+                        HeightRequest="34"
+                        HorizontalOptions="Center"
+                        Source="{Binding PlayPauseIcon}"
+                        VerticalOptions="Center"
+                        WidthRequest="34">
+
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="White" />
+                        </Image.Behaviors>
+
+                    </Image>
+
                 </Border>
+
+                <!--  Next  -->
 
                 <Border
-    Grid.Column="3"
-    WidthRequest="55"
-    HeightRequest="55"
-    BackgroundColor="#1E1E1E"
-    StrokeThickness="0"
-    StrokeShape="RoundRectangle 28">
+                    Grid.Column="3"
+                    BackgroundColor="#1E1E1E"
+                    HeightRequest="55"
+                    StrokeShape="RoundRectangle 28"
+                    StrokeThickness="0"
+                    WidthRequest="55">
 
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer
-            Command="{Binding NextSongCommand}" />
+                        <TapGestureRecognizer Command="{Binding NextSongCommand}" />
                     </Border.GestureRecognizers>
 
                     <Image
-        Source="next.png"
-        WidthRequest="26"
-        HeightRequest="26"
-        HorizontalOptions="Center"
-        VerticalOptions="Center"/>
+                        HeightRequest="24"
+                        HorizontalOptions="Center"
+                        Source="next.png"
+                        VerticalOptions="Center"
+                        WidthRequest="24">
+
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="White" />
+                        </Image.Behaviors>
+
+                    </Image>
+
                 </Border>
+
+                <!--  Repeat  -->
+
                 <Image
                     Grid.Column="4"
-                    Source="repeat.png"
-                    WidthRequest="24"
                     HeightRequest="24"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center"/>
+                    Source="repeat.png"
+                    VerticalOptions="Center"
+                    WidthRequest="24">
+
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="White" />
+                    </Image.Behaviors>
+
+                </Image>
 
             </Grid>
 
         </VerticalStackLayout>
+        <!--  Bottom Buttons  -->
 
-        <!-- Bottom Buttons -->
+        <Grid
+            Grid.Row="2"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="15">
 
-        <Border
-    Grid.Row="2"
-    BackgroundColor="#1E1E1E"
-    StrokeThickness="0"
-    StrokeShape="RoundRectangle 15"
-    Padding="15">
+            <!--  Favorite  -->
 
-            <Border.GestureRecognizers>
-                <TapGestureRecognizer
-            Command="{Binding ToggleFavoriteCommand}" />
-            </Border.GestureRecognizers>
-
-            <HorizontalStackLayout
-        HorizontalOptions="Center"
-        Spacing="8">
-
-                <Image
-            Source="{Binding FavoriteIcon}"
-            WidthRequest="20"
-            HeightRequest="20"/>
-
-                <Label
-            Text="Favorite"
-            TextColor="White"
-            VerticalOptions="Center"/>
-
-            </HorizontalStackLayout>
-        </Border>
-
-        <Button
-                Grid.Column="1"
-                HeightRequest="50"
-                Text="📄 Lyrics"
-                FontAttributes="Bold"
+            <Border
+                Grid.Column="0"
+                Padding="15"
                 BackgroundColor="#1E1E1E"
-                TextColor="White"
-                CornerRadius="15"/>
+                StrokeShape="RoundRectangle 18"
+                StrokeThickness="0">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToggleFavoriteCommand}" />
+                </Border.GestureRecognizers>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+
+                    <Image
+                        HeightRequest="22"
+                        Source="{Binding FavoriteIcon}"
+                        WidthRequest="22">
+
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="White" />
+                        </Image.Behaviors>
+
+                    </Image>
+
+                    <Label
+                        FontSize="16"
+                        Text="Favorite"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+
+                </HorizontalStackLayout>
+
+            </Border>
+
+            <!--  Lyrics  -->
+
+            <Border
+                Grid.Column="1"
+                Padding="15"
+                BackgroundColor="#E56700"
+                StrokeShape="RoundRectangle 18"
+                StrokeThickness="0">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LyricsCommand}" />
+                </Border.GestureRecognizers>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+
+                    <Label FontSize="20" Text="📄" />
+
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="Lyrics"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+
+                </HorizontalStackLayout>
+
+            </Border>
+
+        </Grid>
 
     </Grid>
-
-   
-
 
 </ContentPage>

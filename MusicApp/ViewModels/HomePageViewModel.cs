@@ -18,88 +18,22 @@ namespace MusicApp.ViewModels
         public ObservableCollection<Song> RecommendedSongs { get; } = new();
 
         public AsyncRelayCommand<Song>PlaySongCommand { get; set; }
-
-        public HomePageViewModel()
+        protected readonly SongServices _songServices;
+        public HomePageViewModel(SongServices songServices)
         {
+            
             PlaySongCommand = new AsyncRelayCommand<Song>(PlaySongCommandHandler);
-            TrendingSongs.Add(new Song
-            {
-                Title = "Enemy",
-                Artist = "Imagine Dragons",
-                Image = "album7.png",
-                Duration = "2:53"
-            });
+            _songServices = songServices;
 
-            TrendingSongs.Add(new Song
-            {
-                Title = "Closer",
-                Artist = "The Chainsmokers",
-                Image = "album8.png",
-                Duration = "4:02"
-            });
+            var songs = _songServices.GetSongs();
 
-            TrendingSongs.Add(new Song
+            foreach (var song in songs)
             {
-                Title = "Thunder",
-                Artist = "Imagine Dragons",
-                Image = "album9.png",
-                Duration = "3:09"
-            });
+                RecentlyPlayed.Add(song);
+                RecommendedSongs.Add(song);
+                TrendingSongs.Add(song);
+            }
 
-            TrendingSongs.Add(new Song
-            {
-                Title = "Lovely",
-                Artist = "Billie Eilish",
-                Image = "album10.png",
-                Duration = "3:18"
-            });
-            RecentlyPlayed.Add(new Song
-            {
-                Title = "Believer",
-                Artist = "Imagine Dragons",
-                Image = "home.png",
-                Duration = "3:28"
-            });
-
-            RecentlyPlayed.Add(new Song
-            {
-                Title = "Faded",
-                Artist = "Alan Walker",
-                Image = "library.png",
-                Duration = "3:15"
-            });
-
-            RecentlyPlayed.Add(new Song
-            {
-                Title = "Heat Waves",
-                Artist = "Glass Animals",
-                Image = "profile.png",
-                Duration = "3:42"
-            });
-
-            RecommendedSongs.Add(new Song
-            {
-                Title = "Perfect",
-                Artist = "Ed Sheeran",
-                Image = "search.png",
-                Duration = "4:21"
-            });
-
-            RecommendedSongs.Add(new Song
-            {
-                Title = "Blinding Lights",
-                Artist = "The Weeknd",
-                Image = "user.png",
-                Duration = "3:20"
-            });
-
-            RecommendedSongs.Add(new Song
-            {
-                Title = "Shape of You",
-                Artist = "Ed Sheeran",
-                Image = "dontnet_bot.png",
-                Duration = "3:55"
-            });
         }
 
         [RelayCommand]
@@ -126,7 +60,10 @@ namespace MusicApp.ViewModels
             {
                 return;
             }
-            await Shell.Current.GoToAsync(nameof(PlayerPage));
+            await Shell.Current.GoToAsync(nameof(PlayerPage), new Dictionary<string, object>
+            {
+                ["Song"] = song
+            });
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using Music2._0.ViewModels;
+using MusicApp.Models;
+using MusicApp.Services;
 using MusicApp.ViewModels;
 using MusicApp.Views;
 
@@ -12,6 +15,7 @@ namespace MusicApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -37,6 +41,8 @@ namespace MusicApp
             builder.Services.AddTransient<LibraryPageViewModel>();
             builder.Services.AddTransient<ProfilePage>();
             builder.Services.AddTransient<ProfilePageViewModel>();
+            builder.Services.AddSingleton<SongServices>();
+            builder.Services.AddSingleton<FavouritesServices>();
 
             return builder.Build();
         }

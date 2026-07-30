@@ -10,7 +10,7 @@ namespace MusicApp.Models
 
         public string Artist { get; set; }
 
-        public string Image { get; set; }
+        public ImageSource Image { get; set; }
 
         public string Duration { get; set; }
         public bool IsFavourite { get; set; }

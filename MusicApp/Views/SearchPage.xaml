@@ -1,69 +1,68 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MusicApp.Views.SearchPage"
-             Title="SearchPage">
+<ContentPage
+    x:Class="MusicApp.Views.SearchPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Search">
+
     <ScrollView>
 
-        <VerticalStackLayout
-            Padding="20,50,20,20"
-            Spacing="20">
+        <VerticalStackLayout Padding="20,50,20,20" Spacing="20">
 
-            <!-- Header -->
+            <!--  Header  -->
 
             <Grid ColumnDefinitions="Auto,*">
 
                 <Border
-                    WidthRequest="45"
-                    HeightRequest="45"
                     BackgroundColor="#1E1E1E"
+                    HeightRequest="45"
+                    StrokeShape="RoundRectangle 22"
                     StrokeThickness="0"
-                    StrokeShape="RoundRectangle 22">
+                    WidthRequest="45">
 
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding BackCommand}" />
+                        <TapGestureRecognizer Command="{Binding BackCommand}" />
                     </Border.GestureRecognizers>
 
                     <Image
-                        Source="back.png"
-                        WidthRequest="22"
                         HeightRequest="22"
                         HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
+                        Source="back.png"
+                        VerticalOptions="Center"
+                        WidthRequest="22" />
+
                 </Border>
 
                 <Label
                     Grid.Column="1"
-                    Text="Search"
-                    FontSize="28"
+                    Margin="15,0,0,0"
                     FontAttributes="Bold"
+                    FontSize="28"
+                    Text="Search"
                     TextColor="White"
-                    VerticalOptions="Center"
-                    Margin="15,0,0,0"/>
+                    VerticalOptions="Center" />
 
             </Grid>
 
-            <!-- Search -->
+            <!--  Search Bar  -->
 
             <SearchBar
-                Placeholder="Search songs, artists..."
-                Text="{Binding SearchText}"
                 BackgroundColor="#1E1E1E"
+                Placeholder="Search songs or artists..."
                 PlaceholderColor="#888888"
-                TextColor="White"/>
+                SearchCommand="{Binding SearchCommand}"
+                Text="{Binding SearchText}"
+                TextColor="White" />
 
-            <!-- Recent -->
+            <!--  Recent Searches  -->
 
             <Label
-                Text="Recent Searches"
-                FontSize="22"
                 FontAttributes="Bold"
-                TextColor="White"/>
+                FontSize="22"
+                Text="Recent Searches"
+                TextColor="White" />
 
-            <CollectionView
-                ItemsSource="{Binding RecentSearches}"
-                SelectionMode="None">
+            <CollectionView ItemsSource="{Binding RecentSearches}" SelectionMode="None">
 
                 <CollectionView.ItemTemplate>
 
@@ -73,13 +72,13 @@
                             Margin="0,0,0,10"
                             Padding="15"
                             BackgroundColor="#1E1E1E"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 15">
+                            StrokeShape="RoundRectangle 15"
+                            StrokeThickness="0">
 
                             <Label
-                                Text="{Binding}"
                                 FontSize="16"
-                                TextColor="White"/>
+                                Text="{Binding .}"
+                                TextColor="White" />
 
                         </Border>
 
@@ -89,17 +88,39 @@
 
             </CollectionView>
 
-            <!-- Songs -->
+            <!--  Songs  -->
 
             <Label
-                Text="Popular Songs"
-                FontSize="22"
                 FontAttributes="Bold"
-                TextColor="White"/>
+                FontSize="22"
+                Text="Popular Songs"
+                TextColor="White" />
 
-            <CollectionView
-                ItemsSource="{Binding Songs}"
-                SelectionMode="None">
+            <CollectionView ItemsSource="{Binding FilteredSongs}" SelectionMode="None">
+
+                <CollectionView.EmptyView>
+
+                    <VerticalStackLayout
+                        Padding="30"
+                        HorizontalOptions="Center"
+                        Spacing="10">
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalTextAlignment="Center"
+                            Text="No songs found"
+                            TextColor="White" />
+
+                        <Label
+                            FontSize="14"
+                            HorizontalTextAlignment="Center"
+                            Text="Try searching with a different title or artist."
+                            TextColor="#AAAAAA" />
+
+                    </VerticalStackLayout>
+
+                </CollectionView.EmptyView>
 
                 <CollectionView.ItemTemplate>
 
@@ -109,42 +130,38 @@
                             Margin="0,0,0,12"
                             Padding="12"
                             BackgroundColor="#1E1E1E"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 18">
+                            StrokeShape="RoundRectangle 18"
+                            StrokeThickness="0">
 
-                            <Grid
-                                ColumnDefinitions="60,*,Auto"
-                                ColumnSpacing="15">
+                            <Grid ColumnDefinitions="60,*,Auto" ColumnSpacing="15">
 
                                 <Image
-                                    Source="{Binding Image}"
-                                    WidthRequest="60"
+                                    Aspect="AspectFill"
                                     HeightRequest="60"
-                                    Aspect="AspectFill"/>
+                                    Source="{Binding Image}"
+                                    WidthRequest="60" />
 
-                                <VerticalStackLayout
-                                    Grid.Column="1"
-                                    VerticalOptions="Center">
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
 
                                     <Label
-                                        Text="{Binding Title}"
-                                        FontSize="18"
                                         FontAttributes="Bold"
-                                        TextColor="White"/>
+                                        FontSize="18"
+                                        Text="{Binding Title}"
+                                        TextColor="White" />
 
                                     <Label
-                                        Text="{Binding Artist}"
                                         FontSize="14"
-                                        TextColor="#AAAAAA"/>
+                                        Text="{Binding Artist}"
+                                        TextColor="#AAAAAA" />
 
                                 </VerticalStackLayout>
 
                                 <Image
                                     Grid.Column="2"
-                                    Source="play.png"
-                                    WidthRequest="22"
                                     HeightRequest="22"
-                                    VerticalOptions="Center"/>
+                                    Source="play.png"
+                                    VerticalOptions="Center"
+                                    WidthRequest="22" />
 
                             </Grid>
 

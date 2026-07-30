@@ -8,6 +8,6 @@ public partial class LibraryPage : ContentPage
     public LibraryPage()
     {
         InitializeComponent();
-        BindingContext = new LibraryPageViewModel(new SongServices(),new Services.FavouritesServices());
+        BindingContext = new LibraryPageViewModel(new Services.FavouritesServices());
     }
 }

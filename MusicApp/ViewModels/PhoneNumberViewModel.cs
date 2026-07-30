@@ -24,14 +24,13 @@ namespace MusicApp.ViewModels
 
         async Task ContinueCommandHandler()
         {
-            if (string.IsNullOrEmpty(PhoneNumber))
+            if (string.IsNullOrEmpty(PhoneNumber) || PhoneNumber.Length != 10)
             {
-                await Shell.Current.DisplayAlert("Error", "Please Enter PhoneNumber", "Cancel");
+                await Shell.Current.DisplayAlert("Error", "Please Enter a valid PhoneNumber", "Cancel");
             }
             else
             {
                 await Shell.Current.GoToAsync(nameof(OtpPage));
-
             }
         }
     }

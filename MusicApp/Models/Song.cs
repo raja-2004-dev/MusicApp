@@ -14,6 +14,7 @@ namespace MusicApp.Models
 
         public string Duration { get; set; }
         public bool IsFavourite { get; set; }
+        public string AudioFile { get; set; }
     }
 
 }

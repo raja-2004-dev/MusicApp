@@ -9,6 +9,7 @@ public partial class PlayerPageViewModel : ObservableObject, IQueryAttributable
 {
     private readonly SongServices _songServices;
     private readonly FavouritesServices _favouritesServices;
+    private readonly AudioService _audioService;
 
     private Song? _currentSong;
 
@@ -36,15 +37,18 @@ public partial class PlayerPageViewModel : ObservableObject, IQueryAttributable
     [ObservableProperty]
     private string favoriteIcon = "heart.png";
 
+    public string PlayPauseIcon => IsPlaying ? "pause.png" : "play.png";
+
     public PlayerPageViewModel(
         SongServices songServices,
-        FavouritesServices favouritesServices)
+        FavouritesServices favouritesServices,
+        AudioService audioService)
     {
         _songServices = songServices;
         _favouritesServices = favouritesServices;
+        _audioService = audioService;
+        _audioService.PlaybackEnded += OnPlaybackEnded;
     }
-
-    public string PlayPauseIcon => IsPlaying ? "pause.png" : "play.png";
 
     partial void OnIsPlayingChanged(bool value)
     {
@@ -56,18 +60,84 @@ public partial class PlayerPageViewModel : ObservableObject, IQueryAttributable
         if (query.TryGetValue("Song", out var value) &&
             value is Song song)
         {
-            _currentSong = song;
+            _songServices.SetCurrentSong(song);
 
-            Title = song.Title;
-            Artist = song.Artist;
-            Image = song.Image;
-            CurrentTime = song.Duration;
-            TotalTime = song.Duration;
-
-            FavoriteIcon = _favouritesServices.IsFavorite(song)
-                ? "heart_fill.png"
-                : "heart.png";
+            LoadSong(song);
         }
+    }
+    private async void OnPlaybackEnded()
+    {
+        await NextSong();
+    }
+
+    private void LoadSong(Song song)
+    {
+        _currentSong = song;
+
+        Title = song.Title;
+        Artist = song.Artist;
+        Image = song.Image;
+
+        CurrentTime = "0:00";
+        TotalTime = song.Duration;
+
+        FavoriteIcon = _favouritesServices.IsFavorite(song)
+            ? "heart_fill.png"
+            : "heart.png";
+    }
+
+    [RelayCommand]
+    private async Task PlayPause()
+    {
+        if (_currentSong == null)
+            return;
+
+        if (_audioService.IsPlaying)
+        {
+            _audioService.Pause();
+            IsPlaying = false;
+        }
+        else
+        {
+            if (IsPlaying)
+            {
+                _audioService.Resume();
+            }
+            else
+            {
+                await _audioService.PlayAsync(_currentSong.AudioFile);
+            }
+
+            IsPlaying = true;
+        }
+    }
+
+    [RelayCommand]
+    private async Task NextSong()
+    {
+        _audioService.Stop();
+
+        var song = _songServices.NextSong();
+
+        LoadSong(song);
+
+        await _audioService.PlayAsync(song.AudioFile);
+
+        IsPlaying = true;
+    }
+
+    [RelayCommand]
+    private async Task PreviousSong()
+    {
+        _audioService.Stop();
+
+        var song = _songServices.PreviousSong();
+
+        LoadSong(song);
+
+        await _audioService.PlayAsync(song.AudioFile);
+
+        IsPlaying = true;
     }
 
     [RelayCommand]
@@ -84,26 +154,10 @@ public partial class PlayerPageViewModel : ObservableObject, IQueryAttributable
     }
 
     [RelayCommand]
-    private void PlayPause()
-    {
-        IsPlaying = !IsPlaying;
-    }
-
-    [RelayCommand]
-    private void NextSong()
-    {
-        // We'll implement this later.
-    }
-
-    [RelayCommand]
-    private void PreviousSong()
-    {
-        // We'll implement this later.
-    }
-
-    [RelayCommand]
     private async Task GoBack()
     {
+        _audioService.Stop();
+
         await Shell.Current.GoToAsync("..");
     }
 

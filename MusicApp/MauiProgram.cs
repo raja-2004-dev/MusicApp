@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Music2._0.ViewModels;
-using MusicApp.Models;
 using MusicApp.Services;
 using MusicApp.ViewModels;
 using MusicApp.Views;
-
+using Plugin.Maui.Audio;
 namespace MusicApp
 {
     public static class MauiProgram
@@ -43,6 +42,8 @@ namespace MusicApp
             builder.Services.AddTransient<ProfilePageViewModel>();
             builder.Services.AddSingleton<SongServices>();
             builder.Services.AddSingleton<FavouritesServices>();
+            builder.Services.AddSingleton(AudioManager.Current);
+            builder.Services.AddSingleton<AudioService>();
 
             return builder.Build();
         }

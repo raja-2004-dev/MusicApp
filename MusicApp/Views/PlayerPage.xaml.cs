@@ -13,4 +13,16 @@ public partial class PlayerPage : ContentPage
 		PageModel= pagemodel;
 		this.BindingContext= PageModel;
 	}
+    private void ProgressSlider_DragCompleted(
+    object sender,
+    EventArgs e)
+    {
+        if (sender is Slider slider)
+        {
+            if (BindingContext is PlayerPageViewModel viewModel)
+            {
+                viewModel.SeekCommand.Execute(slider.Value);
+            }
+        }
+    }
 }

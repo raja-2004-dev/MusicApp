@@ -34,7 +34,7 @@ public class AudioService
 
     public void Pause()
     {
-        if (_player != null && _player.IsPlaying)
+        if (_player?.IsPlaying == true)
         {
             _player.Pause();
         }
@@ -50,13 +50,23 @@ public class AudioService
 
     public void Stop()
     {
-        if (_player != null)
-        {
-            _player.PlaybackEnded -= Player_PlaybackEnded;
-            _player.Stop();
-            _player.Dispose();
-            _player = null;
-        }
+        if (_player == null)
+            return;
+
+        _player.PlaybackEnded -= Player_PlaybackEnded;
+
+        _player.Stop();
+        _player.Dispose();
+
+        _player = null;
+    }
+
+    public void Seek(double seconds)
+    {
+        if (_player == null)
+            return;
+
+        _player.Seek(seconds);
     }
 
     public bool IsPlaying =>
@@ -67,9 +77,4 @@ public class AudioService
 
     public double CurrentPosition =>
         _player?.CurrentPosition ?? 0;
-
-    public void Seek(double seconds)
-    {
-        _player?.Seek(seconds);
-    }
 }

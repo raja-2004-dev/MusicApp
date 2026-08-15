@@ -44,7 +44,7 @@ namespace MusicApp
             builder.Services.AddSingleton<FavouritesServices>();
             builder.Services.AddSingleton(AudioManager.Current);
             builder.Services.AddSingleton<AudioService>();
-
+            builder.Services.AddSingleton<RecentSongsService>();
             return builder.Build();
         }
     }

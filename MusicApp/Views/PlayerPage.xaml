@@ -132,13 +132,14 @@
             <!--  Progress  -->
 
             <Slider
-                Maximum="100"
-                MaximumTrackColor="#444444"
-                Minimum="0"
-                MinimumTrackColor="#E56700"
-                ThumbColor="#E56700"
-                Value="{Binding Progress}" />
-
+    x:Name="ProgressSlider"
+    Minimum="0"
+    Maximum="{Binding Duration}"
+    Value="{Binding Progress, Mode=OneWay}"
+    MinimumTrackColor="#E56700"
+    MaximumTrackColor="#444444"
+    ThumbColor="#E56700"
+    DragCompleted="ProgressSlider_DragCompleted" />
             <!--  Time  -->
 
             <Grid ColumnDefinitions="Auto,*,Auto">
@@ -159,15 +160,14 @@
                 <!--  Shuffle  -->
 
                 <Image
-                    HeightRequest="24"
-                    HorizontalOptions="Center"
-                    Source="shuffle.png"
-                    VerticalOptions="Center"
-                    WidthRequest="24">
+    Source="{Binding ShuffleIcon}"
+    HeightRequest="24"
+    WidthRequest="24">
 
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="White" />
-                    </Image.Behaviors>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+            Command="{Binding ToggleShuffleCommand}" />
+                    </Image.GestureRecognizers>
 
                 </Image>
 
@@ -262,16 +262,14 @@
                 <!--  Repeat  -->
 
                 <Image
-                    Grid.Column="4"
-                    HeightRequest="24"
-                    HorizontalOptions="Center"
-                    Source="repeat.png"
-                    VerticalOptions="Center"
-                    WidthRequest="24">
+    Source="{Binding RepeatIcon}"
+    HeightRequest="24"
+    WidthRequest="24">
 
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="White" />
-                    </Image.Behaviors>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+            Command="{Binding ToggleRepeatCommand}" />
+                    </Image.GestureRecognizers>
 
                 </Image>
 

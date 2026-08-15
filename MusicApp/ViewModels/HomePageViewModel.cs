@@ -3,68 +3,104 @@ using CommunityToolkit.Mvvm.Input;
 using MusicApp.Models;
 using MusicApp.Services;
 using MusicApp.Views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
-namespace MusicApp.ViewModels
+namespace MusicApp.ViewModels;
+
+public partial class HomePageViewModel : ObservableObject
 {
-    public partial class HomePageViewModel:ObservableObject
+    private readonly SongServices _songServices;
+    private readonly RecentSongsService _recentSongsService;
+
+    public ObservableCollection<Song> TrendingSongs { get; } = new();
+
+    public ObservableCollection<Song> RecommendedSongs { get; } = new();
+
+    public ObservableCollection<Song> RecentlyPlayed =>
+        _recentSongsService.RecentlyPlayed;
+
+
+    public HomePageViewModel(
+        SongServices songServices,
+        RecentSongsService recentSongsService)
     {
-        [ObservableProperty] private string _searchText;
-        public ObservableCollection<Song> RecentlyPlayed { get; } = new();
-        public ObservableCollection<Song> TrendingSongs { get; } = new();
+        _songServices = songServices;
+        _recentSongsService = recentSongsService;
 
-        public ObservableCollection<Song> RecommendedSongs { get; } = new();
+        LoadSongs();
+    }
 
-        public AsyncRelayCommand<Song>PlaySongCommand { get; set; }
-        protected readonly SongServices _songServices;
-        public HomePageViewModel(SongServices songServices)
+
+    // ------------------------------------------------
+    // LOAD SONGS
+    // ------------------------------------------------
+
+    private void LoadSongs()
+    {
+        var songs = _songServices.GetSongs();
+
+        TrendingSongs.Clear();
+        RecommendedSongs.Clear();
+
+        foreach (var song in songs)
         {
-            
-            PlaySongCommand = new AsyncRelayCommand<Song>(PlaySongCommandHandler);
-            _songServices = songServices;
-
-            var songs = _songServices.GetSongs();
-
-            foreach (var song in songs)
-            {
-                RecentlyPlayed.Add(song);
-                RecommendedSongs.Add(song);
-                TrendingSongs.Add(song);
-            }
-
+            TrendingSongs.Add(song);
+            RecommendedSongs.Add(song);
         }
+    }
 
-        [RelayCommand]
-        private async Task OpenSearch()
-        {
-            await Shell.Current.GoToAsync(nameof(SearchPage));
-        }
 
-        [RelayCommand]
-        private async Task OpenLibrary()
-        {
-            await Shell.Current.GoToAsync(nameof(LibraryPage));
-        }
+    // ------------------------------------------------
+    // PLAY SONG
+    // ------------------------------------------------
 
-        [RelayCommand]
-        private async Task OpenProfile()
-        {
-            await Shell.Current.GoToAsync(nameof(ProfilePage));
-        }
+    [RelayCommand]
+    private async Task PlaySong(Song song)
+    {
+        if (song == null)
+            return;
 
-        async Task PlaySongCommandHandler(Song song)
-        {
-            if (song == null)
-            {
-                return;
-            }
-            await Shell.Current.GoToAsync(nameof(PlayerPage), new Dictionary<string, object>
+        await Shell.Current.GoToAsync(
+            nameof(PlayerPage),
+            new Dictionary<string, object>
             {
                 ["Song"] = song
             });
-        }
+    }
+
+
+    // ------------------------------------------------
+    // SEARCH
+    // ------------------------------------------------
+
+    [RelayCommand]
+    private async Task OpenSearch()
+    {
+        await Shell.Current.GoToAsync(
+            nameof(SearchPage));
+    }
+
+
+    // ------------------------------------------------
+    // LIBRARY
+    // ------------------------------------------------
+
+    [RelayCommand]
+    private async Task OpenLibrary()
+    {
+        await Shell.Current.GoToAsync(
+            nameof(LibraryPage));
+    }
+
+
+    // ------------------------------------------------
+    // PROFILE
+    // ------------------------------------------------
+
+    [RelayCommand]
+    private async Task OpenProfile()
+    {
+        await Shell.Current.GoToAsync(
+            nameof(ProfilePage));
     }
 }
